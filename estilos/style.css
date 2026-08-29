@@ -1,17 +1,19 @@
 * {
     margin: 0px;
     padding: 0px;
+    box-sizing: border-box; /*Melhor controle da tela*/
     font-family: Arial, Helvetica, sans-serif;
 }
 
 html, body {
-    width: 100vh;
+    width: 100vw;
     height: 100vh;
-    background-color: black;
+    overflow: hidden; /*Evita scroll indesejado - NECESSARIO SABER COMO FUNCIONA*/
+
 }
 
 body{
-    background: url('../imagens/fundo-madeira.jpg') no-repeat top center;
+    background: url('../imagens/fundo-dos.jpg') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
 }
@@ -19,6 +21,7 @@ body{
 main{
     position: relative;
     height: 100vh;
+    width: 100vw; /*Garante que a main ocupe toda a tela*/
 }
 
 section#telefone{
@@ -27,36 +30,64 @@ section#telefone{
     left: 50%;
     transform: translate(-50%, -50%);
    
-    width: 627px;
-    height: 622px;
+    width: min(627px, 90vw); /*Maximo 627px, mas adapta a 90% da tela*/
+    height: min(622px, 90vh); /*Maximo 622px, mas adapta a 90% da altura*/
+    max-width: 627px;
+    max-height: 622px;
+
     background: url('../imagens/frame-iphone.png') no-repeat;
+    background-size: contain; /* Garante que a imagem do iPhone caiba*/
 }
 
 iframe#tela{
     position: relative;
-    top: 80px;
-    left: 22px;
-    width: 267px;
-    height: 475px;
+    top: 12.8%; /*Usado % em vez de px, como forma de acompanhar o posicionamento a tela do iPhone dentro do frame*/
+    left: 3.5%; /*Ajuste fino para centralizer no frame*/
+    width: 42.5%; /*Proporcional ao tamanho do frame*/
+    height: 76.3%; /*Proporcional ao tamanho do frame*/
+    border: none; /*Remove a borda do iframe*/
 }
 
 section#redes-sociais{
     text-align: right;
+    position: fixed; /*Fixa os icones a posição na tela, mesmo com scroll*/
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%); /*Centraliza verticalmente os icones*/
+    z-index: 10; /*Grante que fique acima de tudo*/
 }
 
 
 section#redes-sociais img{
+    display: block; /* Um icone abaixo do outro */
     width: 50px;
-    margin: 10px;
+    margin: 10px 0; /* Ajuste para espaçamento vertical entre os icones */
     border-radius: 50%;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.449);
     box-sizing: border-box;
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    transition: transform .3s, border .3s, box-shadow .3s; /* Adiciona transição suave para transformações, borda e sombra */
 }
 
 section#redes-sociais img:hover{
     border: 2px solid rgba(255, 255, 255, 0.501);
-    transform: translate(-3px, -3px);
+    transform: translate(-3px, -3px) scale(1.05); /*Adicionei scale para efeito extra*/
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.449);
-    transition: transform .3s;
 }
 
+/* ✅ BÔNUS: Ajuste para telas muito pequenas (celulares) */
+@media (max-width: 768px) {
+    section#redes-sociais {
+        right: 10px;
+    }
+    
+    section#redes-sociais img {
+        width: 40px;
+        margin: 8px 0;
+    }
+    
+    section#telefone {
+        width: 90vw;
+        height: 90vh;
+    }
+}
